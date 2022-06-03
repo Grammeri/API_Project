@@ -1,26 +1,30 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
+import {apiPlaceHolder, getPlaceHolderObject} from "./api/apiPlaceHolder";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [data, setData] = useState<Array<getPlaceHolderObject>>([])
+    useEffect(() => {
+        apiPlaceHolder.get()
+            .then(res => {
+                setData(res.data)
+            })
+
+    }, [])
+
+    return (
+        <div>
+            {data.map(el => {
+                return (
+                    <div>
+                        <span>{el.id} - </span>
+                        <span> {el.title}</span>
+                    </div>
+                )
+            })}
+        </div>
+    );
 }
 
 export default App;
