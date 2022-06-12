@@ -10,7 +10,6 @@ let initialState: Array<getPlaceHolderObjectType> = [
     }
 ]
 
-
 export const jsonPlaceHolderReducer = (state= initialState, action:tsarType) =>{
     switch(action.type) {
         case "GET":{
