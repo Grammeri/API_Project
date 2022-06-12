@@ -10,6 +10,8 @@ export type RootReducerType = ReturnType<typeof RootReducer>
 
 export let store = createStore(RootReducer,applyMiddleware(thunk))
 /*export type AppDispatch = typeof store.dispatch*/
+
+
 export type AppDispatch = ThunkDispatch<RootState, unknown,AnyAction>
 export type RootState = ReturnType<typeof store.getState>
 
@@ -22,11 +24,3 @@ export type AppThunk<ReturnType = void> = ThunkAction<
     >
 
 
-// export let store = configureStore({
-//
-//     reducer:{
-//         jphReducer: jsonPlaceHolderReducer
-//     },
-// })
-
-// export type RootState = ReturnType<typeof store.getState>

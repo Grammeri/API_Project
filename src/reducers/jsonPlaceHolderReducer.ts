@@ -10,39 +10,60 @@ let initialState: Array<getPlaceHolderObjectType> = [
     }
 ]
 
-
-export const jsonPlaceHolderReducer = (state= initialState, action:tsarType) =>{
-    switch(action.type) {
-        case "GET":{
+export const jsonPlaceHolderReducer = (state = initialState, action: tsarType) => {
+    switch (action.type) {
+        case "GET": {
             return [...action.payload.data]
         }
-        default: return state
-    }
-}
-
-type tsarType=getPlaceHolderObjectACType
-type getPlaceHolderObjectACType=ReturnType<typeof getPlaceHolderObjectAC>
-const getPlaceHolderObjectAC=(data:Array<getPlaceHolderObjectType>)=>{
-    return {
-        type:'GET',
-        payload: {
-          data
+        case "POST":{
+            console.log(action.payload.data)
+            return [action.payload.data, ...state]
         }
-    }as const
+        default:
+            return state
+    }
+}
+
+type tsarType = getPlaceHolderObjectACType
+    | postPlaceHolderObjectACType
+type getPlaceHolderObjectACType = ReturnType<typeof getPlaceHolderObjectAC>
+
+const getPlaceHolderObjectAC = (data: Array<getPlaceHolderObjectType>) => {
+    return {
+        type: 'GET',
+        payload: {
+            data
+        }
+    } as const
 }
 
 
-export const getPlaceHolderObjectThunk=()=>async(dispatch:Dispatch)=>{
-    try{
-        let result=await apiPlaceHolder.get()
-        console.log(result.data)
+export const getPlaceHolderObjectThunk = () => async (dispatch: Dispatch) => {
+    try {
+        let result = await apiPlaceHolder.get()
         dispatch(getPlaceHolderObjectAC(result.data))
-    }
-    catch {
+    } catch {
         console.log('vse propalo')
     }
 }
 
+type postPlaceHolderObjectACType = ReturnType<typeof postPlaceHolderObjectAC>
 
+const postPlaceHolderObjectAC = (data:getPlaceHolderObjectType)=>{
+    return {
+        type: "POST",
+        payload:{
+            data
+        }
+    }as const
+}
+export const postPlaceHolderObjectThunk = () => async (dispatch: Dispatch) => {
+    try {
+        let result = await apiPlaceHolder.post()
+        dispatch(postPlaceHolderObjectAC(result.data))
+    } catch {
+        console.log('vse propalo')
+    }
+}
 
 

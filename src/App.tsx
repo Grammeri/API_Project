@@ -1,43 +1,26 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
-import {getPlaceHolderObjectType} from "./api/apiPlaceHolder";
 import {useAppDispatch, useAppSelector} from "./hooks/hooks";
-import {getPlaceHolderObjectThunk} from "./reducers/jsonPlaceHolderReducer";
+import {getPlaceHolderObjectThunk, postPlaceHolderObjectThunk} from "./reducers/jsonPlaceHolderReducer";
+import Header from "./components/Header.";
 
 function App() {
     const dispatch = useAppDispatch()
     const posts=useAppSelector(state => state.jphReducer)
-    // const[posts,setPosts]=useState<Array<getPlaceHolderObjectType>>([])
-    //
-    // const getPlaceHolderAPI=async ()=>{
-    //     const  result=await fetch('https://jsonplaceholder.typicode.com/posts');
-    //     const  data = await result.json();
-    //     setPosts(data)
-    // }
-    //
-    // useEffect(()=>{
-    //     getPlaceHolderAPI()
-    // },[])
-
-    // const [data, setData] = useState<Array<getPlaceHolderObjectType>>([])
-    // useEffect(() => {
-    //     apiPlaceHolder.get()
-    //         .then(res => {
-    //             setData(res.data)
-    //         })
-    //
-    // }, [])
-
 
     useEffect(() => {
         dispatch(getPlaceHolderObjectThunk())
          }, [])
 
+    const addPost=()=>{
+        dispatch(postPlaceHolderObjectThunk())
+    }
 
 
     return (
         <div>
-            {posts.map(el => {
+            <Header addPost={addPost}/>
+            {posts.map((el) => {
                 return (
                     <div>
                         <span>{el.id} - </span>

@@ -10,11 +10,18 @@ let instance = axios.create({
 
 export const apiPlaceHolder = {
     get: () => {
-    return instance.get<Array<getPlaceHolderObjectType>>('/posts')
+        return instance.get<Array<getPlaceHolderObjectType>>('/posts')
+    },
+    post: () => {
+        return instance.post<getPlaceHolderObjectType>('/posts', {
+            title: 'foo',
+            body: 'bar',
+            userId: 1,
+        })
     }
 }
 
-export type getPlaceHolderObjectType={
+export type getPlaceHolderObjectType = {
     "userId": number,
     "id": number,
     "title": string,
