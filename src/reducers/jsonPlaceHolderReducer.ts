@@ -24,6 +24,7 @@ export const jsonPlaceHolderReducer = (state = initialState, action: tsarType) =
     }
 }
 
+
 type tsarType = getPlaceHolderObjectACType
     | postPlaceHolderObjectACType
 type getPlaceHolderObjectACType = ReturnType<typeof getPlaceHolderObjectAC>
@@ -57,9 +58,16 @@ const postPlaceHolderObjectAC = (data:getPlaceHolderObjectType)=>{
         }
     }as const
 }
+
+const payload={
+    title: 'fooNEW',
+    body: 'bar',
+    userId: 1,
+}
+
 export const postPlaceHolderObjectThunk = () => async (dispatch: Dispatch) => {
     try {
-        let result = await apiPlaceHolder.post()
+        let result = await apiPlaceHolder.post(payload)
         dispatch(postPlaceHolderObjectAC(result.data))
     } catch {
         console.log('vse propalo')

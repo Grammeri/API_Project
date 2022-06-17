@@ -25,6 +25,4 @@ const HeaderComponent = styled.button`
   background: black;
   width: 100%;
   height: 50px;
-
-
 `

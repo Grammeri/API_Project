@@ -12,11 +12,11 @@ export const apiPlaceHolder = {
     get: () => {
         return instance.get<Array<getPlaceHolderObjectType>>('/posts')
     },
-    post: () => {
+    post: (payload:{title: string, body: string, userId: number}) => {
         return instance.post<getPlaceHolderObjectType>('/posts', {
-            title: 'foo',
-            body: 'bar',
-            userId: 1,
+            title: payload.title,
+            body: payload.body,
+            userId: payload.userId
         })
     }
 }
