@@ -6,31 +6,22 @@ import Header from "./components/Header.";
 
 function App() {
     const dispatch = useAppDispatch()
-    const posts=useAppSelector(state => state.jphReducer)
+    const posts = useAppSelector(state => state.jphReducer)
 
-
- const [payload,setPayload]=useState(
- {
-         title: 'пришло с инпута',
-         body: 'bar',
-         userId: 1,
-     }
- )
 
 
     useEffect(() => {
         dispatch(getPlaceHolderObjectThunk())
-         }, [])
+    }, [])
 
-    const addPost=(newTitle:string)=>{
-        setPayload({...payload, title: newTitle, body: "bar", userId: 1})
-        dispatch(postPlaceHolderObjectThunk(payload))
+    const addPost = (newTitle: string) => {
+dispatch(postPlaceHolderObjectThunk({title: newTitle, body: "hz", userId: 33}))
     }
 
 
     return (
         <div>
-            <Header addPost={addPost}/>
+            <Header addPost={addPost} />
             {posts.map((el) => {
                 return (
                     <div>

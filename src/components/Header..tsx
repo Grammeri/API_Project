@@ -3,19 +3,21 @@ import styled from "styled-components";
 
 type HeaderPropsType = {
     addPost: (title:string) => void
+
+
 }
 
 
 const Header = (props: HeaderPropsType) => {
 
-const [newTitle, setNewTitle]=useState("")
+const [newTitle, setNewTitle]= useState("")
 
     const onClickHandler = () => {
-        props.addPost(newTitle);
+         props.addPost(newTitle);
         setNewTitle("")
     }
     const onChangeHandler =(e:ChangeEvent<HTMLInputElement>)=>{
-        {setNewTitle(e.currentTarget.value)}
+        setNewTitle(e.currentTarget.value)
     }
     const onKeyPressHandler=(e:KeyboardEvent<HTMLInputElement>)=>{
     if(e.key==="Enter"){
@@ -26,10 +28,8 @@ const [newTitle, setNewTitle]=useState("")
 
     return (
         <HeaderComponent>
-            <input type="text"
-                   value={newTitle}
-            onChange={onChangeHandler}
-                   onKeyPress={onKeyPressHandler}
+            <input type="text" value={newTitle}
+            onChange={onChangeHandler} onKeyPress={onKeyPressHandler}
             />
             <button onClick={onClickHandler}>Add Post</button>
         </HeaderComponent>
