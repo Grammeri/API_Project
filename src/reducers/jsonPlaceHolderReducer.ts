@@ -59,13 +59,13 @@ const postPlaceHolderObjectAC = (data:getPlaceHolderObjectType)=>{
     }as const
 }
 
-const payload={
-    title: 'fooNEW',
-    body: 'bar',
-    userId: 1,
-}
+// const payload={
+//     title: 'fooNEW',
+//     body: 'bar',
+//     userId: 1,
+// }
 
-export const postPlaceHolderObjectThunk = () => async (dispatch: Dispatch) => {
+export const postPlaceHolderObjectThunk = (payload:{title: string, body: string, userId: number}) => async (dispatch: Dispatch) => {
     try {
         let result = await apiPlaceHolder.post(payload)
         dispatch(postPlaceHolderObjectAC(result.data))
