@@ -15,9 +15,12 @@ export const jsonPlaceHolderReducer = (state = initialState, action: tsarType) =
         case "GET": {
             return [...action.payload.data]
         }
-        case "POST":{
+        case "POST": {
             console.log(action.payload.data)
             return [action.payload.data, ...state]
+        }
+        case "DELETE": {
+            return state.filter(el=>el.id!==action.payload.value)
         }
         default:
             return state
@@ -27,6 +30,8 @@ export const jsonPlaceHolderReducer = (state = initialState, action: tsarType) =
 
 type tsarType = getPlaceHolderObjectACType
     | postPlaceHolderObjectACType
+    | deletePlaceHolderACType
+
 type getPlaceHolderObjectACType = ReturnType<typeof getPlaceHolderObjectAC>
 
 const getPlaceHolderObjectAC = (data: Array<getPlaceHolderObjectType>) => {
@@ -50,28 +55,44 @@ export const getPlaceHolderObjectThunk = () => async (dispatch: Dispatch) => {
 
 type postPlaceHolderObjectACType = ReturnType<typeof postPlaceHolderObjectAC>
 
-const postPlaceHolderObjectAC = (data:getPlaceHolderObjectType)=>{
+const postPlaceHolderObjectAC = (data: getPlaceHolderObjectType) => {
     return {
         type: "POST",
-        payload:{
+        payload: {
             data
         }
-    }as const
+    } as const
 }
-
-// const payload={
-//     title: 'fooNEW',
-//     body: 'bar',
-//     userId: 1,
-// }
-
-export const postPlaceHolderObjectThunk = (payload:{title: string, body: string, userId: number}) => async (dispatch: Dispatch) => {
+export const postPlaceHolderObjectThunk = (payload: { title: string, body: string, userId: number }) => async (dispatch: Dispatch) => {
     try {
         let result = await apiPlaceHolder.post(payload)
         dispatch(postPlaceHolderObjectAC(result.data))
     } catch {
         console.log('vse propalo')
     }
+}
+
+type deletePlaceHolderACType = ReturnType<typeof deletePlaceHolderAC>
+
+const deletePlaceHolderAC = (value:number) => {
+    return {
+        type: "DELETE",
+        payload: {
+            value
+        }
+    } as const
+}
+
+export const deletePlaceHolderObjectThunk = (value:number) => async (dispatch: Dispatch) => {
+    try {
+        let res = await apiPlaceHolder.delete(value)
+        dispatch(deletePlaceHolderAC(value))
+        console.log(res.data)
+    } catch {
+
+        console.log('vse propalo!')
+    }
+
 }
 
 

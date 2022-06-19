@@ -18,6 +18,9 @@ export const apiPlaceHolder = {
             body: payload.body,
             userId: payload.userId
         })
+    },
+    delete: (value:number)=>{
+        return instance.delete(`/posts/${value}`)
     }
 }
 

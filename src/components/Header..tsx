@@ -1,45 +1,58 @@
-import React, {ChangeEvent,KeyboardEvent, useState} from 'react';
+import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import styled from "styled-components";
 
 type HeaderPropsType = {
-    addPost: (title:string) => void
-
-
+    addPost: (title: string) => void
+    deleteNum1Btn: (value:number) => void
 }
 
+export const Header = (props: HeaderPropsType) => {
 
-const Header = (props: HeaderPropsType) => {
+    const [newTitle, setNewTitle] = useState("")
 
-const [newTitle, setNewTitle]= useState("")
 
-    const onClickHandler = () => {
-         props.addPost(newTitle);
+    const onPostClickHandler = () => {
+        props.addPost(newTitle);
         setNewTitle("")
     }
-    const onChangeHandler =(e:ChangeEvent<HTMLInputElement>)=>{
+
+    const onTitleChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setNewTitle(e.currentTarget.value)
     }
-    const onKeyPressHandler=(e:KeyboardEvent<HTMLInputElement>)=>{
-    if(e.key==="Enter"){
-        onClickHandler()
-        setNewTitle("")
-    }
+
+
+    const onTitleKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter") {
+            onPostClickHandler()
+            setNewTitle("")
+        }
     }
 
+    const deleteBtn = () => {
+        props.deleteNum1Btn(1)
+    }
     return (
         <HeaderComponent>
+            <button onClick={deleteBtn}>Delete Num 1</button>
             <input type="text" value={newTitle}
-            onChange={onChangeHandler} onKeyPress={onKeyPressHandler}
+                   onChange={onTitleChangeHandler}
+                   onKeyPress={onTitleKeyPressHandler}
             />
-            <button onClick={onClickHandler}>Add Post</button>
+
+
+            <button onClick={onPostClickHandler}>Add Post</button>
+
+
         </HeaderComponent>
     );
 };
 
-export default Header;
 
 const HeaderComponent = styled.button`
   background: black;
   width: 100%;
   height: 50px;
 `
+
+
+
