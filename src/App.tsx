@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import {useAppDispatch, useAppSelector} from "./hooks/hooks";
 import {
@@ -6,7 +6,8 @@ import {
     getPlaceHolderObjectThunk,
     postPlaceHolderObjectThunk
 } from "./reducers/jsonPlaceHolderReducer";
-import {Header} from "./components/Header.";
+import {Header} from "./components/Header"
+import {Button} from "./components/Button";
 
 
 function App() {
@@ -17,30 +18,33 @@ function App() {
         dispatch(getPlaceHolderObjectThunk())
     }, [])
 
-    const addPost = (newTitle: string) => {
+    const addAllShit = (newTitle: string, newBody:string) => {
         debugger
-        dispatch(postPlaceHolderObjectThunk({title: newTitle, body: "body", userId: 33}))
+        dispatch(postPlaceHolderObjectThunk({title: newTitle, body: newBody, userId: 1}))
     }
 
-    const deleteNum1Btn = (value:number) => {
+    const deleteBtn = (value:number) => {
         dispatch(deletePlaceHolderObjectThunk(value))
     }
 
 
+    let userId=1
     return (
         <div>
             <Header
-                addPost={addPost}
-                deleteNum1Btn={deleteNum1Btn}
+                addAllShit={addAllShit}
+                delete={deleteBtn}
+                userId={userId}
             />
             {posts.map((el) => {
+
                 return (
                     <div>
-                        <button onClick={()=>deleteNum1Btn(el.id)}>X</button>
-                        <span>{el.id} - </span>
-                        <span> {el.title}</span>
-                        <span> {el.body}</span>
 
+                        <Button callback={()=>deleteBtn(el.id)} btnName={"X"}/>
+                        <span>{el.id} - </span>
+                        <span><div style={{"color":"red"}}> This is title:</div>{el.title}</span>
+                        <span><div style={{"color":"lightblue"}}> This is body: </div>{el.body}</span>
 
                     </div>
                 )
