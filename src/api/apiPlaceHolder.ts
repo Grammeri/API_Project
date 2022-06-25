@@ -21,6 +21,14 @@ export const apiPlaceHolder = {
     },
     delete: (value:number)=>{
         return instance.delete(`/posts/${value}`)
+    },
+    update: ()=>{
+        return instance.put(`/posts/1`,{
+            id: 1,
+            title: 'newfoo',
+            body: 'newbar',
+            userId: 1,
+        })
     }
 }
 

@@ -21,9 +21,11 @@ export const jsonPlaceHolderReducer = (state = initialState, action: tsarType) =
             return [action.payload.data, ...state]
         }
         case "DELETE": {
-
             return state.filter(el=>el.id!==action.payload.value)
-
+        }
+        case "CHANGE-TITLE":{
+            return state.map(el => el.id===action.payload.data.id ? {
+                ...el, title:action.payload.data.title, body:action.payload.data.body}:el)
         }
         default:
             return state
@@ -33,6 +35,7 @@ export const jsonPlaceHolderReducer = (state = initialState, action: tsarType) =
 type tsarType = getPlaceHolderObjectACType
     | postPlaceHolderObjectACType
     | deletePlaceHolderACType
+    | changeTitleACType
 
 type getPlaceHolderObjectACType = ReturnType<typeof getPlaceHolderObjectAC>
 
@@ -96,14 +99,25 @@ export const deletePlaceHolderObjectThunk = (value:number) => async (dispatch: D
     }
 }
 
-const changeTitleAC = (id:number, title:string) => {
+const changeTitleAC = (data:getPlaceHolderObjectType) => {
     return {
         type:"CHANGE-TITLE",
-        payload:{
-            id,
-            title
+        payload: {
+            data
         }
+
+        }as const
+    }
+
+
+type changeTitleACType = ReturnType<typeof changeTitleAC>
+
+export const updateTitleThunk = () => async (dispatch:Dispatch) => {
+    try {
+        let res = await apiPlaceHolder.update()
+        console.log(res.data)
+        dispatch(changeTitleAC(res.data))
+    } catch {
+        console.log("error")
     }
 }
-
-
