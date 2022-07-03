@@ -112,9 +112,9 @@ const changeTitleAC = (data:getPlaceHolderObjectType) => {
 
 type changeTitleACType = ReturnType<typeof changeTitleAC>
 
-export const updateTitleThunk = () => async (dispatch:Dispatch) => {
+export const updateTitleThunk = (id:number) => async (dispatch:Dispatch) => {
     try {
-        let res = await apiPlaceHolder.update()
+        let res = await apiPlaceHolder.update(id)
         console.log(res.data)
         dispatch(changeTitleAC(res.data))
     } catch {

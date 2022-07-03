@@ -6,10 +6,7 @@ import {Button} from "./Button";
 type HeaderPropsType = {
     addAllShit: (title: string, body:string, userId:number) => void
     delete: (value:number) => void
-    userId:number
-    changeTitle:(title:string)=>void
-    title:string
-
+    userId:1
 }
 
 export const Header = (props: HeaderPropsType) => {
@@ -61,9 +58,6 @@ export const Header = (props: HeaderPropsType) => {
         }
     }
 
-    const ChangeTitle1 = ()=>{
-        props.changeTitle(props.title)
-    }
 
     return (
         <HeaderComponent>
@@ -82,7 +76,7 @@ export const Header = (props: HeaderPropsType) => {
             <Button callback={TitleOrPostHandler}
                     btnName={"Title or Body"}/>
             {error && <div className={"errorMessage"}>{error}</div>}
-            <Button callback={ChangeTitle1} btnName={"Change Title"}/>
+
         </HeaderComponent>
     );
 };

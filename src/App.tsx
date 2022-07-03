@@ -27,8 +27,8 @@ function App() {
         dispatch(deletePlaceHolderObjectThunk(value))
     }
 
-    const changeTitle = ()=>{
-        dispatch(updateTitleThunk())
+    const updateBtn = (id:number)=>{
+        dispatch(updateTitleThunk(id))
     }
 
     let userId=1
@@ -38,10 +38,7 @@ function App() {
             <Header
                 addAllShit={addAllShit}
                 delete={deleteBtn}
-                userId={userId}
-                changeTitle={changeTitle}
-                title={"NewTitle"}
-
+                userId={1}
             />
             {posts.map((el) => {
 
@@ -50,6 +47,7 @@ function App() {
                         <Button callback={()=>deleteBtn(el.id)} btnName={"X"}/>
                         <span>{el.id} - </span>
                         <span><div style={{"color":"red"}}> This is title:</div>{el.title}</span>
+                        <Button callback={()=>updateBtn(el.id)} btnName={"Update"}/>
                         <span><div style={{"color":"lightblue"}}> This is body: </div>{el.body}</span>
                     </div>
                 )
