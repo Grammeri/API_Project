@@ -2,11 +2,8 @@ import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import styled from "styled-components";
 import {Button} from "./Button";
 
-
 type HeaderPropsType = {
     addAllShit: (title: string, body:string) => void
-    // delete: (value:number) => void
-    // userId:1
 }
 
 export const Header = (props: HeaderPropsType) => {
@@ -14,6 +11,7 @@ export const Header = (props: HeaderPropsType) => {
     const [newTitle, setNewTitle] = useState("")
     const [newBody, setNewBody] = useState("")
     const [error, setError] = useState<string|boolean>(false)
+
 
     const TitleOrPostHandler = () => {
         if (newTitle.trim() !== "" && newBody.trim() == "") {
@@ -80,7 +78,6 @@ export const Header = (props: HeaderPropsType) => {
         </HeaderComponent>
     );
 };
-
 
 const HeaderComponent = styled.button`
   background: yellow;

@@ -2,7 +2,6 @@ import {apiPlaceHolder, getPlaceHolderObjectType} from "../api/apiPlaceHolder";
 import {Dispatch} from "redux";
 import {RootState} from "../store/store";
 
-
 let initialState: Array<getPlaceHolderObjectType> = [
     {
         userId: 0,
@@ -49,15 +48,15 @@ const getPlaceHolderObjectAC = (data: Array<getPlaceHolderObjectType>) => {
     } as const
 }
 
-export const getPlaceHolderObjectThunk = () => async (dispatch: Dispatch) => {
+export const getPlaceHolderObjectThunk = (setProgress:(progress:boolean)=>void) => async (dispatch: Dispatch) => {
     try {
-        //truProgress
+setProgress(true)
         let result = await apiPlaceHolder.get()
         dispatch(getPlaceHolderObjectAC(result.data))
-        //falseProgress
+        setProgress(false)
     } catch {
         console.log('vse propalo')
-        //falseProgress
+        setProgress(false)
     }
 }
 
@@ -71,13 +70,16 @@ const postPlaceHolderObjectAC = (data: getPlaceHolderObjectType) => {
         }
     } as const
 }
-export const postPlaceHolderObjectThunk = (payload: { title: string, body: string }) => async (dispatch: Dispatch, getState: () => RootState) => {
+export const postPlaceHolderObjectThunk = (payload: { title: string, body: string}, setProgress:(progress:boolean)=>void) => async (dispatch: Dispatch, getState: () => RootState) => {
     try {
+        setProgress(true)
         let result = await apiPlaceHolder.post(payload)
         const postsLength = getState().jphReducer.length
         dispatch(postPlaceHolderObjectAC({...result.data, id: postsLength + 1}))
+        setProgress(false)
     } catch {
         console.log('vse propalo')
+        setProgress(false)
     }
 }
 
@@ -92,26 +94,20 @@ const deletePlaceHolderAC = (value:number) => {
     } as const
 }
 
-export const deletePlaceHolderObjectThunk = (value:number) => async (dispatch: Dispatch) => {
+export const deletePlaceHolderObjectThunk = (value:number, setProgress:(progress:boolean)=>void) => async (dispatch: Dispatch) => {
     try {
+        setProgress(true)
         let res = await apiPlaceHolder.delete(value)
         dispatch(deletePlaceHolderAC(value))
         console.log(res.data)
+        setProgress(false)
     } catch {
 
         console.log('vse propalo!')
+        setProgress(false)
     }
 }
 
-/*const changeTitleAC = (data:getPlaceHolderObjectType) => {
-    return {
-        type:"CHANGE-TITLE",
-        payload: {
-            data
-        }
-
-        }as const
-    }*/
 const editTitleAC = (data:getPlaceHolderObjectType) => {
     return {
         type:"EDIT-TITLE",
@@ -124,22 +120,15 @@ const editTitleAC = (data:getPlaceHolderObjectType) => {
 
 type editTitleACType = ReturnType<typeof editTitleAC>
 
-/*export const updateTitleThunk = (id:number) => async (dispatch:Dispatch) => {
+export const updateEditTitleThunk = (titleId:number, newTitle:string, setProgress:(progress:boolean)=>void) => async (dispatch:Dispatch) => {
     try {
-        let res = await apiPlaceHolder.update(id)
-        console.log(res.data)
-        dispatch(changeTitleAC(res.data))
-    } catch {
-        console.log("error")
-    }
-}*/
-
-export const updateEditTitleThunk = (titleId:number, newTitle:string) => async (dispatch:Dispatch) => {
-    try {
+        setProgress(true)
         let res = await apiPlaceHolder.update(titleId, newTitle)
         console.log(res.data)
         dispatch(editTitleAC(res.data))
+        setProgress(false)
     } catch {
         console.log("error")
+        setProgress(false)
     }
 }
