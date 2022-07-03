@@ -23,7 +23,7 @@ export const jsonPlaceHolderReducer = (state = initialState, action: tsarType) =
         case "DELETE": {
             return state.filter(el=>el.id!==action.payload.value)
         }
-        case "CHANGE-TITLE":{
+        case "EDIT-TITLE":{
             return state.map(el => el.id===action.payload.data.id ? {
                 ...el, title:action.payload.data.title, body:action.payload.data.body}:el)
         }
@@ -35,7 +35,7 @@ export const jsonPlaceHolderReducer = (state = initialState, action: tsarType) =
 type tsarType = getPlaceHolderObjectACType
     | postPlaceHolderObjectACType
     | deletePlaceHolderACType
-    | changeTitleACType
+    | editTitleACType
 
 type getPlaceHolderObjectACType = ReturnType<typeof getPlaceHolderObjectAC>
 
@@ -50,10 +50,13 @@ const getPlaceHolderObjectAC = (data: Array<getPlaceHolderObjectType>) => {
 
 export const getPlaceHolderObjectThunk = () => async (dispatch: Dispatch) => {
     try {
+        //truProgress
         let result = await apiPlaceHolder.get()
         dispatch(getPlaceHolderObjectAC(result.data))
+        //falseProgress
     } catch {
         console.log('vse propalo')
+        //falseProgress
     }
 }
 
@@ -67,7 +70,7 @@ const postPlaceHolderObjectAC = (data: getPlaceHolderObjectType) => {
         }
     } as const
 }
-export const postPlaceHolderObjectThunk = (payload: { title: string, body: string, userId: number }) => async (dispatch: Dispatch, getState: () => RootState) => {
+export const postPlaceHolderObjectThunk = (payload: { title: string, body: string }) => async (dispatch: Dispatch, getState: () => RootState) => {
     try {
         let result = await apiPlaceHolder.post(payload)
         const postsLength = getState().jphReducer.length
@@ -99,7 +102,7 @@ export const deletePlaceHolderObjectThunk = (value:number) => async (dispatch: D
     }
 }
 
-const changeTitleAC = (data:getPlaceHolderObjectType) => {
+/*const changeTitleAC = (data:getPlaceHolderObjectType) => {
     return {
         type:"CHANGE-TITLE",
         payload: {
@@ -107,16 +110,34 @@ const changeTitleAC = (data:getPlaceHolderObjectType) => {
         }
 
         }as const
-    }
+    }*/
+const editTitleAC = (data:getPlaceHolderObjectType) => {
+    return {
+        type:"EDIT-TITLE",
+        payload: {
+            data
+        }
 
+    }as const
+}
 
-type changeTitleACType = ReturnType<typeof changeTitleAC>
+type editTitleACType = ReturnType<typeof editTitleAC>
 
-export const updateTitleThunk = (id:number) => async (dispatch:Dispatch) => {
+/*export const updateTitleThunk = (id:number) => async (dispatch:Dispatch) => {
     try {
         let res = await apiPlaceHolder.update(id)
         console.log(res.data)
         dispatch(changeTitleAC(res.data))
+    } catch {
+        console.log("error")
+    }
+}*/
+
+export const updateEditTitleThunk = (titleId:number, newTitle:string) => async (dispatch:Dispatch) => {
+    try {
+        let res = await apiPlaceHolder.update(titleId, newTitle)
+        console.log(res.data)
+        dispatch(editTitleAC(res.data))
     } catch {
         console.log("error")
     }

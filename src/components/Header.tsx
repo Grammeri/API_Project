@@ -4,9 +4,9 @@ import {Button} from "./Button";
 
 
 type HeaderPropsType = {
-    addAllShit: (title: string, body:string, userId:number) => void
-    delete: (value:number) => void
-    userId:1
+    addAllShit: (title: string, body:string) => void
+    // delete: (value:number) => void
+    // userId:1
 }
 
 export const Header = (props: HeaderPropsType) => {
@@ -26,7 +26,7 @@ export const Header = (props: HeaderPropsType) => {
             setError("All fields must be filled!")
         }
         if (newTitle.trim()!=="" && newBody.trim()!=="") {
-            props.addAllShit(newTitle, newBody, props.userId);
+            props.addAllShit(newTitle, newBody);
             if (newTitle !==""){
                 setNewTitle("")
             }
