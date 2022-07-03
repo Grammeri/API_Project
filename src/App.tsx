@@ -1,15 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import './App.css';
-import {useAppDispatch, useAppSelector} from "./hooks/hooks";
 import {
     deletePlaceHolderObjectThunk,
     getPlaceHolderObjectThunk,
     postPlaceHolderObjectThunk,
     updateEditTitleThunk
 } from "./reducers/jsonPlaceHolderReducer";
-import {Header} from "./components/Header"
-import {Button} from "./components/Button";
 import {EditableSpan} from "./EditableSpan";
+import {useAppDispatch, useAppSelector} from "./hooks/hooks";
+import {Header} from "./components/Header";
+import {Button} from "./components/Button";
 
 
 function App() {

@@ -2,6 +2,7 @@ import {apiPlaceHolder, getPlaceHolderObjectType} from "../api/apiPlaceHolder";
 import {Dispatch} from "redux";
 import {RootState} from "../store/store";
 
+
 let initialState: Array<getPlaceHolderObjectType> = [
     {
         userId: 0,
