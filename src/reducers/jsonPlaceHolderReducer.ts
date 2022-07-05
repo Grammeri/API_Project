@@ -2,14 +2,16 @@ import {apiPlaceHolder, getPlaceHolderObjectType} from "../api/apiPlaceHolder";
 import {Dispatch} from "redux";
 import {RootState} from "../store/store";
 
-let initialState: Array<getPlaceHolderObjectType> = [
-    {
+export let initialState: Array<getPlaceHolderObjectType> = [
+    /*{
         userId: 0,
         id: 0,
         title: 'waiting...',
         body: 'q'
-    }
+    }*/
 ]
+
+//Does not work with the uncommented object above
 
 export const jsonPlaceHolderReducer = (state = initialState, action: tsarType) => {
     switch (action.type) {
@@ -48,12 +50,14 @@ const getPlaceHolderObjectAC = (data: Array<getPlaceHolderObjectType>) => {
     } as const
 }
 
-export const getPlaceHolderObjectThunk = (setProgress:(progress:boolean)=>void) => async (dispatch: Dispatch) => {
+export const getPlaceHolderObjectThunk = (setProgress: (progress: boolean) => void) => async (dispatch: Dispatch) => {
     try {
-setProgress(true)
+        setProgress(true)
+
         let result = await apiPlaceHolder.get()
         dispatch(getPlaceHolderObjectAC(result.data))
         setProgress(false)
+
     } catch {
         console.log('vse propalo')
         setProgress(false)

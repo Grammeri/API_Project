@@ -24,7 +24,7 @@ export const apiPlaceHolder = {
     },
     update: (id:number, newTitle:string)=>{
         return instance.put(`/posts/${id}`,{
-            /*id:id,*/
+            id:id,
             title: newTitle,
             body: 'newbar',
          /*   userId: 1,*/
